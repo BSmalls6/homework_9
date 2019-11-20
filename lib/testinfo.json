@@ -1,0 +1,31 @@
+{
+    "name": "Jason",
+    "id": "1",
+    "role": "manager",
+    "email": "jason@test.com",
+    "office": "123-456-7890",
+},
+
+{
+    "name": "Brennan",
+    "id": "4",
+    "role": "engineer",
+    "email": "brennan@test.com",
+    "github": "BSmalls6",
+}
+
+{
+    "name" : "Norman",
+    "id": "2",
+    "role": "engineer",
+    "email": "norman@test.com",
+    "github": "normanLei",
+}
+
+{
+    "name" : "Scott",
+    "id": "3",
+    "role": "Intern",
+    "email": "Scott@test.com",
+    "school": "WSU",
+}
