@@ -1,15 +1,15 @@
 const fs = require("fs");
 
 // Use npm i puppeteer-core for install, much smaller file
-const puppeteer = require('puppeteer')
-const axios = require("axios")
+// const puppeteer = require('puppeteer')
+// const axios = require("axios")
 const inquirer = require("inquirer");
 const info = [];
 
-async function getInfo() {
+async function getManagerInfo() {
     try {
         const name = await inquirer.prompt({
-            message: "What is the name you wish to search?",
+            message: "What is the Managers name?",
             name: "name"
         });
 
@@ -17,16 +17,21 @@ async function getInfo() {
             message: "What is the ID?",
             name: "id"
         });
+        const email = await inquirer.prompt({
+            message: "What is the Email?",
+            name: "Email"
+        });
 
-        const role = await inquirer.prompt({
-            message: "What is the role?",
-            name: "role"
+        const office = await inquirer.prompt({
+            message: "What is the office number?",
+            name: "office"
         });
         info.push(name);
         info.push(id);
-        info.push(role); 
-        
-        specifics(info.role);
+        info.push(email);
+        info.push(office);
+
+        specifics();
 
     }
     catch (err) {
@@ -34,96 +39,107 @@ async function getInfo() {
     }
 };
 
-function specifics(){
-    if(role === "intern" || "engineer" || "manager"){
-        if(role === "intern"){
+async function specifics() {
+    // try {
+    const choice = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'role',
+            message: 'What kind of team member do you wish to add?',
+            choices: ['Engineer', 'Intern', 'I am done adding team members'],
+        },
+    ])
+    let title = JSON.stringify(choice.role);
+
+    getEmployeeinfo(title);
+}
+
+
+
+async function getEmployeeinfo(title) {
+    const emInfo = [];
+    console.log(title);
+    if (title === 'Intern') {
+        try {
+            const name = await inquirer.prompt({
+                message: "What is the Intern's name?",
+                name: "name"
+            });
+
+            const id = await inquirer.prompt({
+                message: "What is the ID?",
+                name: "id"
+            });
+            const email = await inquirer.prompt({
+                message: "What is the Email?",
+                name: "Email"
+            });
+
             const school = await inquirer.prompt({
-                message: "Where did you go to school?",
+                message: "What is the School?",
                 name: "school"
             });
+            emInfo.push(name);
+            emInfo.push(id);
+            emInfo.push(email);
+            emInfo.push(school);
+console.log(emInfo);
+            specifics();
+            // await newGuy(emInfo);
+
         }
-        else if (role === "engineer"){
-            const github = await inquirer.prompt({
-                message: "What is your GitHub ID?",
-                name: "github"
-            });
-        } 
-        else {
-            const phone = await inquirer.prompt({
-                message: "What is your office number?",
-                name: "office"
-            });
+        catch (err) {
+            console.log(err);
         }
-}
-else {
-    console.log("please define your role")
-}
-}
-
-
-function getUser(user, color) {
-    // Get profile data of the user
-    try {
-
-        const queryURL = `https://api.github.com/users/${user}`;
-        axios.get(queryURL).then(function (res) {
-            res.data.color = color;
-            details = {
-                name: res.data.name,
-                company: res.data.company,
-                bio: res.data.bio,
-                blog: res.data.blog,
-                url: res.data.url,
-                location: res.data.location,
-                html_url: res.data.html_url,
-                avatar: res.data.avatar_url,
-                public: res.data.public_repos,
-                followers: res.data.followers,
-                following: res.data.following,
-                color: res.data.color,
-            }
-            console.log(details);
-           let html = generateHTML(details);
-           printPDF(html);
-        })
-
 
     }
 
-    
-    
+    else if (title = 'Engineer') {
+        try {
+            const name = await inquirer.prompt({
+                message: "What is the Engineers's name?",
+                name: "name"
+            });
 
-catch(err) {
-    console.log(err);
+            const id = await inquirer.prompt({
+                message: "What is the ID?",
+                name: "id"
+            });
+            const email = await inquirer.prompt({
+                message: "What is the Email?",
+                name: "Email"
+            });
+
+            const github = await inquirer.prompt({
+                message: "What is the Github username?",
+                name: "github"
+            });
+            emInfo.push(name);
+            emInfo.push(id);
+            emInfo.push(email);
+            emInfo.push(github);
+            console.log(emInfo);
+            specifics();
+
+            // await newGuy(emInfo);
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    }
+    else if (title === 'I am done adding team members') {
+        console.log("finished adding")
+        // createPage();
+    }
+    else {
+        console.log("failed to add member");
+        specifics();
+    }
 }
-}
-
-
- 
-async function printPDF(html) {
-    try {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setContent(html);
-  await page.emulateMedia('screen');
-  await page.pdf ({
- path: 'profile.pdf',
- format: 'A4',
- printBackground: true,
-  });
-  console.log('done');
- 
-  await browser.close();
-  process.exit();
-}
-
-catch(e){
-    console.log('our error', e)
-}
-}
 
 
 
-
-getInfo();
+getManagerInfo();
 

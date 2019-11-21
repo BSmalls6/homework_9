@@ -1,4 +1,5 @@
 const Employee = require("../lib/Employee");
+const jest = require("jest");
 
 test("Can instantiate Employee instance", () => {
   const e = new Employee();
