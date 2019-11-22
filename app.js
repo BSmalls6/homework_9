@@ -1,5 +1,12 @@
 const fs = require("fs");
 const generateHTML = require("./ui");
+const Manager = require("./lib/manager");
+const Employee = require("./lib/employee");
+const Intern = require("./lib/intern");
+const Engineer = require("./lib/engineer");
+
+
+
 
 // Use npm i puppeteer-core for install, much smaller file
 // const puppeteer = require('puppeteer')
@@ -27,11 +34,9 @@ async function getManagerInfo() {
             message: "What is the office number?",
             name: "office"
         });
-        data.push(name);
-        data.push(id);
-        data.push(email);
-        data.push(office);
-await generateHTML(data);
+
+        const mang = new Manager(name, id, office, email);
+        data.push(mang);
         specifics();
 
     }
@@ -47,13 +52,14 @@ async function specifics() {
             type: 'list',
             name: 'role',
             message: 'What kind of team member do you wish to add?',
-            choices: ['Engineer', 'Intern', 'I am done adding team members'],
+            choices: ['Engineer', "Intern", 'I am done adding team members'],
         },
     ])
-    let title = JSON.stringify(choice.role);
+    console.log(choice.role);
+    let title = choice.role;
 
     getEmployeeinfo(title);
-}
+};
 
 
 
@@ -61,6 +67,8 @@ async function getEmployeeinfo(title) {
     const emInfo = [];
     console.log(title);
     if (title === "Intern") {
+        console.log("intern" + title);
+
         try {
             const name = await inquirer.prompt({
                 message: "What is the Intern's name?",
@@ -80,14 +88,12 @@ async function getEmployeeinfo(title) {
                 message: "What is the School?",
                 name: "special"
             });
-            emInfo.push(title);
-            emInfo.push(name);
-            emInfo.push(id);
-            emInfo.push(email);
-            emInfo.push(school);
-console.log(emInfo);
+
+            const emp = new Intern(name, id, email, school, title);
+            data.push(emp);
+            // pushtoArray(emp);
             specifics();
-            await employeeHTML(emInfo);
+
 
         }
         catch (err) {
@@ -96,7 +102,9 @@ console.log(emInfo);
 
     }
 
-    else if (title = "Engineer") {
+    else if (title === 'Engineer') {
+        console.log("enginerr" + title);
+
         try {
             const name = await inquirer.prompt({
                 message: "What is the Engineers's name?",
@@ -116,15 +124,13 @@ console.log(emInfo);
                 message: "What is the Github username?",
                 name: "special"
             });
-            emInfo.push(title);
-            emInfo.push(name);
-            emInfo.push(id);
-            emInfo.push(email);
-            emInfo.push(github);
-            console.log(emInfo);
+
+            const emp = new Engineer(name, id, email, github);
+            data.push(emp);
+            console.log(emp);
             specifics();
 
-            await employeeHTML(emInfo);
+
 
         }
         catch (err) {
@@ -133,27 +139,35 @@ console.log(emInfo);
 
     }
     else if (title === "I am done adding team members") {
+        console.log("done" + title);
+
         console.log("finished adding")
-         createManager();
+        createPage();
     }
     else {
+        console.log("fail" + title);
+
         console.log("failed to add member");
         specifics();
     };
 };
 
-function newGuy(res){
-    document.getElementsByClassName(".employees").innerHTML+=(employeeHTML);
-    console.log("file created")
-
+function newGuy(data) {
+    data.array.forEach(emp => {
+        fs.appendFile('index.html' , employeeHTML(data.emp) , (err)=>{
+            if (err) throw err;
+        })
+    })
+    
 };
-
-function createManager(){
-    fs.writeFile('index.html' , generateHTML, (err) =>{
+   
+function createPage() {
+    console.log(data);
+    fs.writeFile('index.html', generateHTML, (err) => {
         if (err) throw err;
 
         console.log("file created")
-        newGuy();
+        newGuy(data);
     });;
 }
 
