@@ -1,10 +1,11 @@
 const fs = require("fs");
+const generateHTML = require("./ui");
 
 // Use npm i puppeteer-core for install, much smaller file
 // const puppeteer = require('puppeteer')
 // const axios = require("axios")
 const inquirer = require("inquirer");
-const info = [];
+const data = [];
 
 async function getManagerInfo() {
     try {
@@ -26,11 +27,11 @@ async function getManagerInfo() {
             message: "What is the office number?",
             name: "office"
         });
-        info.push(name);
-        info.push(id);
-        info.push(email);
-        info.push(office);
-
+        data.push(name);
+        data.push(id);
+        data.push(email);
+        data.push(office);
+await generateHTML(data);
         specifics();
 
     }
@@ -59,7 +60,7 @@ async function specifics() {
 async function getEmployeeinfo(title) {
     const emInfo = [];
     console.log(title);
-    if (title === 'Intern') {
+    if (title === "Intern") {
         try {
             const name = await inquirer.prompt({
                 message: "What is the Intern's name?",
@@ -77,24 +78,25 @@ async function getEmployeeinfo(title) {
 
             const school = await inquirer.prompt({
                 message: "What is the School?",
-                name: "school"
+                name: "special"
             });
+            emInfo.push(title);
             emInfo.push(name);
             emInfo.push(id);
             emInfo.push(email);
             emInfo.push(school);
 console.log(emInfo);
             specifics();
-            // await newGuy(emInfo);
+            await employeeHTML(emInfo);
 
         }
         catch (err) {
             console.log(err);
-        }
+        };
 
     }
 
-    else if (title = 'Engineer') {
+    else if (title = "Engineer") {
         try {
             const name = await inquirer.prompt({
                 message: "What is the Engineers's name?",
@@ -112,8 +114,9 @@ console.log(emInfo);
 
             const github = await inquirer.prompt({
                 message: "What is the Github username?",
-                name: "github"
+                name: "special"
             });
+            emInfo.push(title);
             emInfo.push(name);
             emInfo.push(id);
             emInfo.push(email);
@@ -121,22 +124,37 @@ console.log(emInfo);
             console.log(emInfo);
             specifics();
 
-            // await newGuy(emInfo);
+            await employeeHTML(emInfo);
 
         }
         catch (err) {
             console.log(err);
-        }
+        };
 
     }
-    else if (title === 'I am done adding team members') {
+    else if (title === "I am done adding team members") {
         console.log("finished adding")
-        // createPage();
+         createManager();
     }
     else {
         console.log("failed to add member");
         specifics();
-    }
+    };
+};
+
+function newGuy(res){
+    document.getElementsByClassName(".employees").innerHTML+=(employeeHTML);
+    console.log("file created")
+
+};
+
+function createManager(){
+    fs.writeFile('index.html' , generateHTML, (err) =>{
+        if (err) throw err;
+
+        console.log("file created")
+        newGuy();
+    });;
 }
 
 

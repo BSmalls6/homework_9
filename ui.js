@@ -1,4 +1,4 @@
-function generateHTML(data){
+const generateHTML = function(data){
 return `<!DOCTYPE html>
 <html lang="en">
 
@@ -33,20 +33,8 @@ return `<!DOCTYPE html>
                 </div>
             </div>
 
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title" id="name"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Role: <span id="role"></span></h6>
-                    <p class="card-text">
-                        <ul class="list-group">
-                            <li class="list-group-item">ID #: <span id="ident"></span></li>
-                            <li class="list-group-item">Email:<span id="email"></span> </li>
-                            <li class="list-group-item"><span id="special"></span></li>
-                        </ul>
-                    </p>
+            <div class="employees"></div>
 
-                </div>
-            </div>
         </div>
     </div>
 </body>
@@ -54,7 +42,7 @@ return `<!DOCTYPE html>
 </html>`
 }
 
-function employeeHTML(res){
+ const employeeHTML = function(res){
 return ` <div class="card m-2" style="width: 18rem;">
 <div class="card-body">
     <h5 class="card-title" id="name">${res.name}</h5>
@@ -70,3 +58,5 @@ return ` <div class="card m-2" style="width: 18rem;">
 </div>
 </div>`
 }
+module.exports = generateHTML;
+module.exports = employeeHTML;
