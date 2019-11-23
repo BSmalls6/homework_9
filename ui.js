@@ -16,27 +16,20 @@ return `<!DOCTYPE html>
     <header class="nav justify-content-center bg-info mb-2">
         <h1>My Team</h1>
     </header>
-    <div class="container">
-        
-            <div class="employees"></div>
-
-        </div>
-    </div>
-</body>
-
-</html>`
+   
+`
 }
 
- const employeeHTML = function(res){
+ const employeeHTML = function(data){
 return ` <div class="card m-2" style="width: 18rem;">
 <div class="card-body">
-    <h5 class="card-title" id="name">${res.name}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Role: <span id="role">${res.role}</span></h6>
+    <h5 class="card-title" id="name">${data.name}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Role: <span id="role">${data.title}</span></h6>
     <p class="card-text">
         <ul class="list-group">
-            <li class="list-group-item">ID #: <span id="ident">${res.id}</span></li>
-            <li class="list-group-item">Email:<span id="email">${res.email}</span> </li>
-            <li class="list-group-item"><span id="special">${res.special}</span></li>
+            <li class="list-group-item">ID #: <span id="ident">${data.id}</span></li>
+            <li class="list-group-item">Email:<span id="email">${data.email}</span> </li>
+            <li class="list-group-item"><span id="special">${data.special}</span></li>
         </ul>
     </p>
 

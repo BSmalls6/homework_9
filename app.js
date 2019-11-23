@@ -29,7 +29,7 @@ async function getManagerInfo() {
             message: "What is the office number?",
             name: "special"
         });
-        const mang = new Manager(name,id,email,special);
+        const mang = new Manager(name.name, id.id, email.Email, special.special);
         data.push(mang);
         specifics();
 
@@ -83,7 +83,7 @@ async function getEmployeeinfo(title) {
                 name: "special"
             });
 
-            const emp = new Intern(name, id, email, title, special);
+            const emp = new Intern(name.name, id.id, email.Email, special.special);
             data.push(emp);
             // pushtoArray(emp);
             specifics();
@@ -119,7 +119,7 @@ async function getEmployeeinfo(title) {
                 name: "special"
             });
 
-            const emp = new Engineer(name, id, email, title, special);
+            const emp = new Engineer(name.name, id.id, email.Email, special.special);
             data.push(emp);
             console.log(emp);
             specifics();
@@ -147,10 +147,11 @@ async function getEmployeeinfo(title) {
 };
 
 function newMang(data) {
-    data.appendFile('index.html', employeeHTML(data.mang),(err)=>{
+    console.log(data.mang);
+    data.appendFile('index.html', employeeHTML(data[0]),(err)=>{
         if (err) throw err;
     });
-    // addEmployees(data);
+    addEmployees(data);
     
 };
    
@@ -164,10 +165,13 @@ function createPage() {
     });;
 }
 
-// function addEmployees(res) {
-//     data.forEach('Intern' && 'Engineer')
-//     // run the employeeHTML function for each engineer and intern and append each to the page created
-// }
+function addEmployees(data) {
+    data.forEach('Intern' && 'Engineer', (err)=>{
+        if (err) throw err;
+        fs.appendFile('index.html' , employeeHTML(data));
+    })
+    // run the employeeHTML function for each engineer and intern and append each to the page created
+}
 
 
 
