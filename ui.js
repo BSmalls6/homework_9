@@ -15,12 +15,10 @@ return `<!DOCTYPE html>
 <body>
     <header class="nav justify-content-center bg-info mb-2">
         <h1>My Team</h1>
-    </header>
-   
-`
+    </header>`
 }
 
- const employeeHTML = function(data){
+ function employeeHTML(data){
 return ` <div class="card m-2" style="width: 18rem;">
 <div class="card-body">
     <h5 class="card-title" id="name">${data.name}</h5>

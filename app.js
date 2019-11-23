@@ -146,32 +146,32 @@ async function getEmployeeinfo(title) {
     };
 };
 
-function newMang(data) {
-    console.log(data.mang);
-    data.appendFile('index.html', employeeHTML(data[0]),(err)=>{
-        if (err) throw err;
-    });
-    addEmployees(data);
-    
-};
-   
+// function newMang(info) {
+//     console.log("fail" + data);
+//     fs.appendFile('index.html', employeeHTML(data[0]), (err) => {
+//         if (err) throw err;
+//     });
+//     addEmployees(info);})
+
+
 function createPage() {
     console.log(data);
     fs.writeFile('index.html', generateHTML(), (err) => {
         if (err) throw err;
 
         console.log("file created")
-        newMang(data);
-    });;
+    });
+    addEmployees(data);
 }
 
-function addEmployees(data) {
-    data.forEach('Intern' && 'Engineer', (err)=>{
-        if (err) throw err;
-        fs.appendFile('index.html' , employeeHTML(data));
-    })
-    // run the employeeHTML function for each engineer and intern and append each to the page created
+function addEmployees(info) {
+    let newEmployee = employeeHTML(info);
+    for (i = 0; i < data.length; i++) {
+        fs.appendFile('index.html', newEmployee);
+    }
 }
+// run the employeeHTML function for each engineer and intern and append each to the page created
+
 
 
 
