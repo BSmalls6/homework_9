@@ -6,11 +6,6 @@ const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 
 
-
-
-// Use npm i puppeteer-core for install, much smaller file
-// const puppeteer = require('puppeteer')
-// const axios = require("axios")
 const inquirer = require("inquirer");
 const data = [];
 
@@ -30,12 +25,11 @@ async function getManagerInfo() {
             name: "Email"
         });
 
-        const office = await inquirer.prompt({
+        const special = await inquirer.prompt({
             message: "What is the office number?",
-            name: "office"
+            name: "special"
         });
-
-        const mang = new Manager(name, id, office, email);
+        const mang = new Manager(name,id,email,special);
         data.push(mang);
         specifics();
 
@@ -84,12 +78,12 @@ async function getEmployeeinfo(title) {
                 name: "Email"
             });
 
-            const school = await inquirer.prompt({
+            const special = await inquirer.prompt({
                 message: "What is the School?",
                 name: "special"
             });
 
-            const emp = new Intern(name, id, email, school, title);
+            const emp = new Intern(name, id, email, title, special);
             data.push(emp);
             // pushtoArray(emp);
             specifics();
@@ -120,12 +114,12 @@ async function getEmployeeinfo(title) {
                 name: "Email"
             });
 
-            const github = await inquirer.prompt({
+            const special = await inquirer.prompt({
                 message: "What is the Github username?",
                 name: "special"
             });
 
-            const emp = new Engineer(name, id, email, github);
+            const emp = new Engineer(name, id, email, title, special);
             data.push(emp);
             console.log(emp);
             specifics();
@@ -152,24 +146,28 @@ async function getEmployeeinfo(title) {
     };
 };
 
-function newGuy(data) {
-    data.array.forEach(emp => {
-        fs.appendFile('index.html' , employeeHTML(data.emp) , (err)=>{
-            if (err) throw err;
-        })
-    })
+function newMang(data) {
+    data.appendFile('index.html', employeeHTML(data.mang),(err)=>{
+        if (err) throw err;
+    });
+    // addEmployees(data);
     
 };
    
 function createPage() {
     console.log(data);
-    fs.writeFile('index.html', generateHTML, (err) => {
+    fs.writeFile('index.html', generateHTML(), (err) => {
         if (err) throw err;
 
         console.log("file created")
-        newGuy(data);
+        newMang(data);
     });;
 }
+
+// function addEmployees(res) {
+//     data.forEach('Intern' && 'Engineer')
+//     // run the employeeHTML function for each engineer and intern and append each to the page created
+// }
 
 
 

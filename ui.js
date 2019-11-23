@@ -1,4 +1,4 @@
-const generateHTML = function(data){
+function generateHTML(){
 return `<!DOCTYPE html>
 <html lang="en">
 
@@ -17,22 +17,7 @@ return `<!DOCTYPE html>
         <h1>My Team</h1>
     </header>
     <div class="container">
-        <div class="row" id="members">
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title" id="mName">${data.name}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Role: <span id="mRole">${data.role}</span></h6>
-                    <p class="card-text">
-                        <ul class="list-group">
-                            <li class="list-group-item">ID #: <span id="mIdent">${data.id}</span></li>
-                            <li class="list-group-item">Email:<span id="mEmail">${data.email}</span> </li>
-                            <li class="list-group-item"><span id="mSpecial">${data.officenumber}</span></li>
-                        </ul>
-                    </p>
-
-                </div>
-            </div>
-
+        
             <div class="employees"></div>
 
         </div>
